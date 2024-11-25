@@ -44,7 +44,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.FUEL_REGISTER_REPOSITORY
             return true;
         }
 
-        public async Task<bool> CreateFuelRegisterDetails(CreateFuelRegisterDetailsDto fuel)
+        public async Task<FuelRegisterDetail> CreateFuelRegisterDetails(CreateFuelRegisterDetailsDto fuel)
         {
             var fuelDetailsExist = await _context.FuelRegisterDetails
                 .FirstOrDefaultAsync(x => x.Id == fuel.Id);
@@ -55,8 +55,8 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.FUEL_REGISTER_REPOSITORY
             if (fuelDetailsExist is not null)
             {
                 fuelDetailsExist.MaterialId = material.Id;
-                fuelDetailsExist.Warehouse_ReceivingId = fuel.Warehouse_ReceivingId;
                 fuelDetailsExist.Liters = fuel.Liters;
+                fuelDetailsExist.Warehouse_ReceivingId = fuelDetailsExist.Warehouse_ReceivingId;
                 fuelDetailsExist.Modified_By = fuel.Modified_By;
 
             }
@@ -65,17 +65,18 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.FUEL_REGISTER_REPOSITORY
                 var newFuelDetails = new FuelRegisterDetail
                 {
                     MaterialId = material.Id,
-                    Warehouse_ReceivingId = fuel.Warehouse_ReceivingId,
                     Liters = fuel.Liters,
+                    Warehouse_ReceivingId = fuel.Warehouse_ReceivingId,
                     Added_By = fuel.Added_By,
-
                 };
 
                 await _context.FuelRegisterDetails.AddAsync(newFuelDetails);
 
+                fuelDetailsExist = newFuelDetails;
+
             }
 
-            return true;
+            return fuelDetailsExist;
 
         }
 
@@ -575,6 +576,8 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.FUEL_REGISTER_REPOSITORY
 
         }
 
+
+
         public async Task<PagedList<GetFuelRegisterDto>> GetFuelRegister(UserParams userParams, string Search, string Status, string ? UserId)
         {
             const string forApproval = "For Approval";
@@ -584,54 +587,58 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.FUEL_REGISTER_REPOSITORY
             const string rejected = "Rejected";
 
 
-            var results =  _context.FuelRegisterDetails
-                .Include(r => r.Material)
-                .ThenInclude(r => r.Uom)
-                .Include(r => r.Material)
-                .ThenInclude(r => r.ItemCategory)
-                .Include(r => r.Warehouse_Receiving)
-                .Include(r => r.FuelRegister)
+            var results =  _context.FuelRegisters
+                .Include(r => r.FuelRegisterDetails)
+                .ThenInclude(r => r.Material)
+                .Include(r => r.FuelRegisterDetails)
+                .ThenInclude(r => r.Warehouse_Receiving)
                 .Where(f => f.Is_Active)
                 .Select(f => new GetFuelRegisterDto
                 {
                     Id = f.Id,
-                    Source = f.FuelRegister.Source,
-                    RequestorId = f.FuelRegister.RequestorId,
-                    RequestorName = f.FuelRegister.RequestorName,
-                    MaterialId = f.MaterialId,
-                    Item_Code = f.Material.ItemCode,
-                    Item_Description = f.Material.ItemDescription,
-                    Uom = f.Material.Uom.UomCode,
-                    Item_Categories = f.Material.ItemCategory.ItemCategoryName,
-                    Warehouse_ReceivingId = f.Warehouse_ReceivingId,
-                    Unit_Cost = f.Warehouse_Receiving.UnitPrice,
-                    Liters = f.Liters.Value,
-                    Asset = f.FuelRegister.Asset,
-                    Odometer = f.FuelRegister.Odometer,
-                    Company_Code = f.FuelRegister.Company_Code,
-                    Company_Name = f.FuelRegister.Company_Name,
-                    Department_Code = f.FuelRegister.Department_Code,
-                    Department_Name = f.FuelRegister.Department_Name,
-                    Location_Code = f.FuelRegister.Location_Code,
-                    Location_Name = f.FuelRegister.Location_Name,
-                    Account_Title_Code = f.FuelRegister.Account_Title_Code,
-                    Account_Title_Name = f.FuelRegister.Account_Title_Name,
-                    EmpId = f.FuelRegister.EmpId,
-                    Fullname = f.FuelRegister.Fullname,
+                    Source = f.Source,
+                    RequestorId = f.RequestorId,
+                    RequestorName = f.RequestorName,
+                    GetFuelDetails = f.FuelRegisterDetails
+                    .Where(x => x.Is_Active)
+                    .Select(f => new GetFuelRegisterDto.GetFuelDetail
+                    {
+                        MaterialId = f.MaterialId,
+                        Item_Code = f.Material.ItemCode,
+                        Item_Description = f.Material.ItemDescription,
+                        Uom = f.Material.Uom.UomCode,
+                        Item_Categories = f.Material.ItemCategory.ItemCategoryName,
+                        Warehouse_ReceivingId = f.Warehouse_ReceivingId,
+                        Unit_Cost = f.Warehouse_Receiving.UnitPrice,
+                        Liters = f.Liters.Value,
+
+                    }).ToList(),
+                    Asset = f.Asset,
+                    Odometer = f.Odometer,
+                    Company_Code = f.Company_Code,
+                    Company_Name = f.Company_Name,
+                    Department_Code = f.Department_Code,
+                    Department_Name = f.Department_Name,
+                    Location_Code = f.Location_Code,
+                    Location_Name = f.Location_Name,
+                    Account_Title_Code = f.Account_Title_Code,
+                    Account_Title_Name = f.Account_Title_Name,
+                    EmpId = f.EmpId,
+                    Fullname = f.Fullname,
                     Added_By = f.Added_By,
                     Created_At = f.Created_At,
                     Modified_By = f.Modified_By,
                     Updated_At = f.Updated_At,
-                    Is_Reject = f.FuelRegister.Is_Reject,
-                    Reject_Remarks = f.FuelRegister.Reject_Remarks,
-                    Reject_By = f.FuelRegister.Reject_By,
-                    Is_Approve = f.FuelRegister.Is_Approve,
-                    Approve_At = f.FuelRegister.Approve_At,
-                    Approve_By = f.FuelRegister.Approve_By,
-                    Is_Transact = f.FuelRegister.Is_Transact,
-                    Transact_At = f.FuelRegister.Transact_At,
-                    Transact_By = f.FuelRegister.Transact_By,
-                    Remarks = f.FuelRegister.Remarks
+                    Is_Reject = f.Is_Reject,
+                    Reject_Remarks = f.Reject_Remarks,
+                    Reject_By = f.Reject_By,
+                    Is_Approve = f.Is_Approve,
+                    Approve_At = f.Approve_At,
+                    Approve_By = f.Approve_By,
+                    Is_Transact = f.Is_Transact,
+                    Transact_At = f.Transact_At,
+                    Transact_By = f.Transact_By,
+                    Remarks = f.Remarks
 
                 });
 
@@ -786,7 +793,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.FUEL_REGISTER_REPOSITORY
         public async Task<IReadOnlyList<GetForApprovalFuelDto>> GetForApprovalFuel()
         {
             var fuel = await _context.FuelRegisterDetails
-                .Where(f => f.Is_Active)
+                .Where(f => f.Is_Active && f.FuelRegisterId == null)
                 .Select(f => new GetForApprovalFuelDto
                 {
                     Id = f.Id,
@@ -804,7 +811,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.FUEL_REGISTER_REPOSITORY
                     Created_At = f.Created_At,
                     Modified_By = f.Modified_By,
                     Updated_At = f.Updated_At,
-                    
+               
 
                 }).ToListAsync();
 

@@ -13,7 +13,7 @@ namespace ELIXIRETD.DATA.CORE.INTERFACES.FUEL_REGISTER_INTERFACE
     {
         Task<FuelRegister> CreateFuelRegister(CreateFuelRegisterDto fuel);
 
-        Task<bool> CreateFuelRegisterDetails(CreateFuelRegisterDetailsDto fuel);
+        Task<FuelRegisterDetail> CreateFuelRegisterDetails(CreateFuelRegisterDetailsDto fuel);
 
         Task<IReadOnlyList<GetMaterialByStocksDto>> GetMaterialByStocks();
 

@@ -17,18 +17,6 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.DTOs.FUEL_REGISTER_DTO
         public string RequestorId { get; set; }
         public string RequestorName { get; set; }
 
-        public int? MaterialId { get; set; }
-        public string Item_Code { get; set; }
-        public string Item_Description { get; set; }
-
-        public string Uom {  get; set; }
-        public string Item_Categories { get; set; }
-
-        public int? Warehouse_ReceivingId { get; set; }
-
-        public decimal Unit_Cost { get; set; }
-
-        public decimal Liters { get; set; }
         public string Asset { get; set; }
 
         public decimal? Odometer { get; set; }
@@ -65,8 +53,26 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.DTOs.FUEL_REGISTER_DTO
         public string Transact_By { get; set; }
         public DateTime? Transact_At { get; set; }
 
-
         public string Remarks { get; set; }
 
+
+
+        public List<GetFuelDetail> GetFuelDetails { get; set; }
+
+        public class GetFuelDetail
+        {
+            public int? MaterialId { get; set; }
+            public string Item_Code { get; set; }
+            public string Item_Description { get; set; }
+
+            public string Uom { get; set; }
+            public string Item_Categories { get; set; }
+
+            public int? Warehouse_ReceivingId { get; set; }
+            public decimal Unit_Cost { get; set; }
+            public decimal Liters { get; set; }
+
+
+        }
     }
 }

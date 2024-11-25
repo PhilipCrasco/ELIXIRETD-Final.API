@@ -52,11 +52,52 @@ namespace ELIXIRETD.API.Controllers.FUEL_REGISTER_CONTROLLER
         [HttpPost("create-fuel-details")]
         public async Task<IActionResult> CreateFuelRegisterDetails(CreateFuelRegisterDetailsDto fuel)
         {
+            var barCodeDic = new Dictionary<int, decimal?>();
+            var fuelLiter = new List<decimal?>();
+
+            var fuelLiterRegister = new decimal();
+
+            fuelLiterRegister = fuel.Liters;
+            decimal fuelLiters = 0;
+
 
             fuel.Added_By = User.Identity.Name;
             fuel.Modified_By = User.Identity.Name;
+       
+            var barcodeList = await _unitofwork.FuelRegister.GetMaterialStockByWarehouse();
 
-            var addFuel = await _unitofwork.FuelRegister.CreateFuelRegisterDetails(fuel);
+            foreach (var item in barcodeList)
+            {
+                barCodeDic.Add(item.WarehouseId, item.Remaining_Stocks);
+            }
+
+            if (fuel.Liters > barCodeDic.Values.Sum())
+                return BadRequest("Not enough stocks!");
+
+            foreach (var liter in barCodeDic)
+            {
+                decimal fuelDif = Math.Abs(fuelLiterRegister - fuelLiter.Sum().Value);
+
+
+                if (liter.Value >= (fuelLiterRegister - fuelLiter.Sum()))
+                {
+
+                    fuel.Liters = fuelDif;
+                    fuel.Warehouse_ReceivingId = liter.Key;
+
+                    await _unitofwork.FuelRegister.CreateFuelRegisterDetails(fuel);
+                    break;
+                }
+
+                fuel.Liters = liter.Value.Value;
+                fuel.Warehouse_ReceivingId = liter.Key;
+
+                var createFuel = await _unitofwork.FuelRegister.CreateFuelRegisterDetails(fuel);
+
+                fuelLiter.Add(liter.Value.Value);
+
+            }
+
 
             await _unitofwork.CompleteAsync();
 

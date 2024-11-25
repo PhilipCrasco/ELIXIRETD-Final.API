@@ -749,8 +749,6 @@ namespace ELIXIRETD.API.Controllers.ORDERING_CONTROLLER
             return new JsonResult("Successfully reject list for move order!");
         }
 
-
-
         //=================================================================== MIR MoveOrder Approve =======================================================
 
 
