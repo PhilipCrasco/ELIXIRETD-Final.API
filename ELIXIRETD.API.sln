@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELIXIRETD.API", "ELIXIRETD.API\ELIXIRETD.API.csproj", "{59403848-102A-4113-AE06-CE915F524CC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ELIXIRETD.API", "ELIXIRETD.API\ELIXIRETD.API.csproj", "{59403848-102A-4113-AE06-CE915F524CC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELIXIRETD.DATA", "ELIXIRETD.DATA\ELIXIRETD.DATA.csproj", "{51E30275-C654-46CB-9B63-69F710BC7042}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ELIXIRETD.DATA", "ELIXIRETD.DATA\ELIXIRETD.DATA.csproj", "{51E30275-C654-46CB-9B63-69F710BC7042}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F9386CB6-5FC1-4975-B112-646FA16C72DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{51E30275-C654-46CB-9B63-69F710BC7042}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51E30275-C654-46CB-9B63-69F710BC7042}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51E30275-C654-46CB-9B63-69F710BC7042}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9386CB6-5FC1-4975-B112-646FA16C72DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9386CB6-5FC1-4975-B112-646FA16C72DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9386CB6-5FC1-4975-B112-646FA16C72DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9386CB6-5FC1-4975-B112-646FA16C72DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

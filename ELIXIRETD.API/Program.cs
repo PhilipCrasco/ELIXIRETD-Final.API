@@ -83,19 +83,12 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 }
 
 app.UseHsts();
-
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseCors("ClientPermission");
 app.UseAuthentication();
-
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

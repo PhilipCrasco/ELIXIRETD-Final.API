@@ -80,7 +80,6 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.FUEL_REGISTER_REPOSITORY
 
         }
 
-
         public async Task<FuelRegister> CreateFuelRegister(CreateFuelRegisterDto fuel)
         {
            
@@ -150,10 +149,6 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.FUEL_REGISTER_REPOSITORY
 
             return fuelRegisterExist;
         }
-
-
-      
-
 
         public async Task<IReadOnlyList<GetMaterialByStocksDto>> GetMaterialByStocks()
         {
@@ -319,7 +314,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.FUEL_REGISTER_REPOSITORY
                                     RemainingStocks = total.Sum(x => x.warehouse.ActualGood) + total.Sum(x => x.borrowedReturned.In)
                                     - total.Sum(x => x.reserve.QuantityOrdered) - total.Sum(x => x.issue.Out) - total.Sum(x => x.borrowOut.Out) - total.Sum(x => x.fuel.Quantity.Value),
 
-                                }).Where(x => x.RemainingStocks >= 1);
+                                }).Where(x => x.RemainingStocks >= 0);
 
 
             var GetAvailableItem = getAvailable

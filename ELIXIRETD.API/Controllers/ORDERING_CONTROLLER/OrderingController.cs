@@ -124,14 +124,6 @@ namespace ELIXIRETD.API.Controllers.ORDERING_CONTROLLER
            
         }
 
-
-
-      
-       
-
-
-     
-
         
         //=================================================================== MIR Ordering Preparation Schedule =======================================================
 
