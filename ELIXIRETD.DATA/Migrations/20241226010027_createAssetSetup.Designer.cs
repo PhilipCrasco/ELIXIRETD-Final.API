@@ -4,6 +4,7 @@ using ELIXIRETD.DATA.DATA_ACCESS_LAYER.STORE_CONTEXT;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ELIXIRETD.DATA.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20241226010027_createAssetSetup")]
+    partial class createAssetSetup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -315,8 +317,8 @@ namespace ELIXIRETD.DATA.Migrations
                     b.Property<string>("Approve_By")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("AssetId")
-                        .HasColumnType("int");
+                    b.Property<string>("Asset")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Company_Code")
                         .HasColumnType("nvarchar(max)");
@@ -391,8 +393,6 @@ namespace ELIXIRETD.DATA.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AssetId");
 
                     b.ToTable("FuelRegisters");
                 });
@@ -1930,15 +1930,6 @@ namespace ELIXIRETD.DATA.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("WarehouseReceived");
-                });
-
-            modelBuilder.Entity("ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.FUEL_REGISTER_MODEL.FuelRegister", b =>
-                {
-                    b.HasOne("ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.SETUP_MODEL.Asset", "Asset")
-                        .WithMany()
-                        .HasForeignKey("AssetId");
-
-                    b.Navigation("Asset");
                 });
 
             modelBuilder.Entity("ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.FUEL_REGISTER_MODEL.FuelRegisterDetail", b =>

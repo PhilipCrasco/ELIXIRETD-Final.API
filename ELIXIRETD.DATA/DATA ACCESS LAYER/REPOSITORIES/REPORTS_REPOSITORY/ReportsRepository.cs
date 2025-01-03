@@ -772,7 +772,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.REPORTS_REPOSITORY
                     Warehouse_ReceivingId = r.Warehouse_ReceivingId,
                     Unit_Cost = r.Warehouse_Receiving.UnitPrice,
                     Liters = r.Liters.Value,
-                    Asset = r.FuelRegister.Asset,
+                    Asset = r.FuelRegister.Asset.AssetCode,
                     Odometer = r.FuelRegister.Odometer,
                     Company_Code = r.FuelRegister.Company_Code,
                     Company_Name = r.FuelRegister.Company_Name,
@@ -2005,7 +2005,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.REPORTS_REPOSITORY
                     AccountTitle = x.FuelRegister.Account_Title_Code,
                     EmpId = x.FuelRegister.EmpId,
                     Fullname = x.FuelRegister.Fullname,
-                    AssetTag = x.FuelRegister.Asset,
+                    AssetTag = x.FuelRegister.Asset.AssetCode,
                     CIPNo = "",
                     Helpdesk = 0,
                     Rush = ""
@@ -2501,7 +2501,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.REPORTS_REPOSITORY
                     AccountTitle = x.FuelRegister.Account_Title_Name,
                     EmpId = x.FuelRegister.EmpId,
                     Fullname = x.FuelRegister.Fullname,
-                    AssetTag = x.FuelRegister.Asset,
+                    AssetTag = x.FuelRegister.Asset.AssetCode,
                     CIPNo = "",
                     Helpdesk = 0,
                     Rush = ""
@@ -2882,7 +2882,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.REPORTS_REPOSITORY
                   Location = x.FuelRegister.Location_Name,
                   Account_Title_Code = x.FuelRegister.Account_Title_Code,
                   Account_Title_Name = x.FuelRegister.Account_Title_Name,
-                  Asset = x.FuelRegister.Asset,
+                  Asset = x.FuelRegister.Asset.AssetCode,
                   Asset_Cip = "",
 
               });

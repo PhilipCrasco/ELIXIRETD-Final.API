@@ -59,6 +59,7 @@ namespace ELIXIRETD.DATA.CORE.ICONFIGURATION
         IReports Reports { get; }
 
         IFuelRegisterRepository FuelRegister { get; }
+        IAssetRepository Asset {  get; }
 
 
         Task CompleteAsync();

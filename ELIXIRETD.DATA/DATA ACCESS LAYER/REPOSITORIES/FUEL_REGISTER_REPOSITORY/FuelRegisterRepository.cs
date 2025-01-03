@@ -91,7 +91,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.FUEL_REGISTER_REPOSITORY
             {
                 fuelRegisterExist.RequestorId = fuel.RequestorId;
                 fuelRegisterExist.RequestorName = fuel.RequestorName;
-                fuelRegisterExist.Asset = fuel.Asset;
+                fuelRegisterExist.AssetId = fuel.AssetId;
                 fuelRegisterExist.Odometer = fuel.Odometer;
                 fuelRegisterExist.Modified_By = fuel.Modified_By;
                 fuelRegisterExist.Updated_At = DateTime.Now;
@@ -135,7 +135,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.FUEL_REGISTER_REPOSITORY
                     Transact_At = DateTime.Now,
                     Transact_By = fuel.Transact_By,
                     Odometer = fuel.Odometer,
-                    Asset = fuel.Asset,
+                    AssetId = fuel.AssetId,
 
                 };
 
@@ -608,7 +608,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.FUEL_REGISTER_REPOSITORY
                         Liters = f.Liters.Value,
 
                     }).ToList(),
-                    Asset = f.Asset,
+                    Asset = f.Asset.AssetCode,
                     Odometer = f.Odometer,
                     Company_Code = f.Company_Code,
                     Company_Name = f.Company_Name,
@@ -800,7 +800,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.FUEL_REGISTER_REPOSITORY
                     Warehouse_ReceivingId = f.Warehouse_ReceivingId,
                     Unit_Cost = f.Warehouse_Receiving.UnitPrice,
                     Liters = f.Liters.Value,
-                    Asset = f.FuelRegister.Asset,
+                    Asset = f.FuelRegister.Asset.AssetCode,
                     Odometer = f.FuelRegister.Odometer,
                     Added_By = f.Added_By,
                     Created_At = f.Created_At,

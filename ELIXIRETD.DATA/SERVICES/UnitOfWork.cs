@@ -73,6 +73,8 @@ namespace ELIXIRETD.DATA.SERVICES
 
         public IFuelRegisterRepository FuelRegister { get; set; }
 
+        public IAssetRepository Asset {  get; set; }
+
         public UnitOfWork(StoreContext context, IMediator mediator)
 
         {
@@ -100,6 +102,7 @@ namespace ELIXIRETD.DATA.SERVICES
             TransactType = new TransactTypeRepository(_context);
             Reports = new ReportsRepository(_context);
             FuelRegister = new FuelRegisterRepository(_context);
+            Asset = new AssetRepository(_context);
 
         }
 

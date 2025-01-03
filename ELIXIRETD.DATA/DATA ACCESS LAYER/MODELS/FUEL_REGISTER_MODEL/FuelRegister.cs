@@ -24,7 +24,9 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.FUEL_REGISTER_MODEL
         public string EmpId { get; set; }
         public string Fullname { get; set; }
 
-        public string Asset { get; set; }
+        public int? AssetId { get; set; }
+        public virtual Asset Asset { get; set; }
+
         public decimal? Odometer { get; set; }
 
         public string Added_By { get; set; }
