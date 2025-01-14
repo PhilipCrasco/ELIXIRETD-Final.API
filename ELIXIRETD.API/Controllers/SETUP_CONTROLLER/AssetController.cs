@@ -49,6 +49,7 @@ namespace ELIXIRETD.API.Controllers.SETUP_CONTROLLER
                 {
                     assetAlreadyExist.Add(item);
                     continue;
+                    //
                 }
 
                 var assetNoExist = await _context.Assets.FirstOrDefaultAsync(x => x.AssetNo == item.AssetNo);
