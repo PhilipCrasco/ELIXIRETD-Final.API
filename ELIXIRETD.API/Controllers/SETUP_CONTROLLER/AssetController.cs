@@ -43,11 +43,11 @@ namespace ELIXIRETD.API.Controllers.SETUP_CONTROLLER
                 }
 
                 var assetExist = await _context.Assets
-                    .AnyAsync(x => x.AssetName == item.Asset_Name);
+                    .AnyAsync(x => x.AssetName == item.Asset_Name && x.AssetNo != item.AssetNo);
 
                 if (assetExist)
                 {
-                    availableImport.Add(item);
+                    assetAlreadyExist.Add(item);
                     continue;
                 }
 
@@ -77,7 +77,7 @@ namespace ELIXIRETD.API.Controllers.SETUP_CONTROLLER
 
                     removeAssetNoList.Add(item.AssetNo);
                 }
-                else if (item.AssetNo is not null && assetNoExist is null)
+                else
                 {
                     var create = new Asset
                     {
@@ -87,7 +87,8 @@ namespace ELIXIRETD.API.Controllers.SETUP_CONTROLLER
                         AssetName = item.Asset_Name,
                         AddedBy = User.Identity.Name,
                         SyncDate = DateTime.Now,
-                        StatusSync = "New Added"
+                        StatusSync = "New Added",
+                        DateAdded = DateTime.Now,
 
                     };
 
