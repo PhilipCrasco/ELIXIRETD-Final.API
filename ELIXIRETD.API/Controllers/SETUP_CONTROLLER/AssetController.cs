@@ -30,26 +30,15 @@ namespace ELIXIRETD.API.Controllers.SETUP_CONTROLLER
         {
             var duplicateList = new List<SyncAssetDto>();
             var availableImport = new List<SyncAssetDto>();
-            var assetAlreadyExist = new List<SyncAssetDto>();
 
             var removeAssetNoList = new List<int?>();
 
             foreach (var item in asset)
             {
-                if (asset.Count(x => x.Asset_Name == item.Asset_Name) > 1)
+                if (asset.Count(x => x.AssetNo == item.AssetNo && x.Asset_Name == item.Asset_Name) > 1)
                 {
                     duplicateList.Add(item);
                     continue;
-                }
-
-                var assetExist = await _context.Assets
-                    .AnyAsync(x => x.AssetName == item.Asset_Name && x.AssetNo != item.AssetNo);
-
-                if (assetExist)
-                {
-                    assetAlreadyExist.Add(item);
-                    continue;
-                    //
                 }
 
                 var assetNoExist = await _context.Assets.FirstOrDefaultAsync(x => x.AssetNo == item.AssetNo);
@@ -95,8 +84,6 @@ namespace ELIXIRETD.API.Controllers.SETUP_CONTROLLER
 
                     availableImport.Add(item);
                     await _unitOfWork.Asset.CreateAsset(create);
-
-
                 }
 
             }
@@ -117,10 +104,9 @@ namespace ELIXIRETD.API.Controllers.SETUP_CONTROLLER
             {
                 AvailableImport = availableImport,
                 DuplicateList = duplicateList,
-                AssetAlreadyExist = assetAlreadyExist,
             };
 
-            if(duplicateList.Count() > 0 && assetAlreadyExist.Count() > 0)
+            if(duplicateList.Count() > 0)
             {
                 return BadRequest(resultlist);
             }
